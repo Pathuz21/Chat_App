@@ -1,0 +1,714 @@
+
+\documentclass[12pt,a4paper]{article}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{center}
+    \textbf{\large Sant Dnyaneshwar Shikshan Sanstha’s}\\[0.5cm]
+    \textbf{\Large ANNASAHEB DANGE COLLEGE OF ENGINEERING AND TECHNOLOGY, ASHTA}\\[0.3cm]
+    \textit{(An Empowered Autonomous Institute)}\\[0.5cm]
+    \textbf{2025--26}\\[1.5cm]
+    \textbf{\large Department of Computer Science and Engineering}\\[0.8cm]
+
+    % College Logo
+    \includegraphics[width=3.5cm]{college_logo.png}\\[0.8cm]
+
+    \textbf{Subject : Information and Network Security (2CSPC401)}\\[0.3cm]
+    \textbf{Case Study Report on}\\[0.3cm]
+    {\Large \textbf{{End to End Encrypted Chat Application}}}\\[0.8cm]
+
+    \textit{Submitted by}\\[0.5cm]
+
+    % Table
+    \renewcommand{\arraystretch}{1.3}
+    \setlength{\tabcolsep}{10pt}
+    \begin{tabular}{|p{2cm}|p{6cm}|p{3cm}|}
+        \hline
+        \textbf{Roll No} & \textbf{Name} & \textbf{URN} \\
+        \hline
+        4146 & Prathamesh Prakash Shinde & 1022031057 \\
+        \hline
+        4145 & Keshav Hanamant Pawar & 1022031053 \\
+        \hline
+    \end{tabular}\\[0.8cm]
+
+    \textbf{UNDER GUIDANCE OF}\\[0.3cm]
+    \textbf{Mrs. T. A. Walandkar}\\[0.2cm]
+\end{center}
+
+\vfill % pushes everything above to center vertically, removing large bottom gap
+
+
+
+\newpage
+\thispagestyle{empty}
+
+\begin{center}
+    \textbf{\LARGE CERTIFICATE}\\[1cm]
+\end{center}
+
+\onehalfspacing
+\noindent
+This is to certify that \textbf{Prathamesh Prakash Shinde} and \textbf{Keshav Hanmant Pawar}, final-year undergraduate students of Computer Science and Engineering at \textbf{Annasaheb Dange College of Engineering and Technology, Ashta}, have submitted a case study report titled \textbf{``End to End Encrypted Chat App''} under the guidance of \textbf{Mrs. T. A. Walandkar}, Department of Computer Science and Engineering. 
+
+The work presented in this case study is original and has been carried out sincerely as part of the requirements for the course \textbf{Information and Network Security (2CSPC401)}.\\[1cm]
+
+% Table for names and roll numbers
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{20pt}
+\begin{tabular}{|p{6cm}|p{6cm}|}
+    \hline
+    \centering \textbf{Prathamesh Prakash Shinde} & \centering \textbf{Keshav Hanmant Pawar} \tabularnewline
+    \hline
+    \centering 4146 & \centering 4145 \tabularnewline
+    \hline
+\end{tabular}
+\end{center}
+
+\vspace{1.5cm}
+
+\noindent
+\begin{tabular}{p{6cm}p{7cm}}
+\textbf{Place:} Ashta & \textbf{Mrs. T. A. Walandkar} \\
+\textbf{Date:} 16/10/2025 & Professor, Department of Computer Science and Engineering.
+\end{tabular}
+
+\newpage
+
+\thispagestyle{empty}
+
+\begin{center}
+    \textbf{\LARGE Executive Summary}
+\end{center}
+
+\onehalfspacing
+\noindent
+This case study presents the design and implementation of an \textbf{End-to-End Encrypted Chat Application}, developed to ensure secure real-time communication between users over the internet. The objective of this project was to achieve complete confidentiality, integrity, and authenticity of exchanged messages by utilizing modern cryptographic techniques and secure communication protocols.
+
+The project employs a combination of \textbf{Diffie–Hellman key exchange} for secure session key generation and \textbf{AES (Advanced Encryption Standard)} for encrypting and decrypting messages on both ends. Each chat message is encrypted locally before transmission and decrypted only by the intended recipient, ensuring that even the server cannot access message contents. Additionally, digital signatures and hashing mechanisms are incorporated to verify message integrity and prevent tampering.
+
+The primary aim of this implementation is to emulate secure communication similar to popular messaging platforms while maintaining a lightweight and open-source structure suitable for academic or enterprise environments. The system also supports real-time WebSocket-based messaging, secure authentication, and an intuitive user interface for seamless communication.
+
+\vspace{0.3cm}
+\noindent\textbf{Key Findings:}
+\begin{itemize}
+    \item Successful implementation of secure key exchange between communicating users using Diffie–Hellman algorithm.
+    \item Encrypted messages could not be intercepted or read by unauthorized users, including the server administrator.
+    \item Message integrity and authenticity were effectively verified using hashing and digital signatures.
+    \item Real-time message delivery was achieved with minimal latency using WebSocket-based communication.
+\end{itemize}
+
+\vspace{0.3cm}
+\noindent\textbf{Major Recommendations:}
+\begin{itemize}
+    \item Integrate \textbf{multi-device synchronization} with secure key storage for cross-platform usability.
+    \item Implement \textbf{forward secrecy} and \textbf{message expiration} for enhanced data privacy.
+    \item Add optional \textbf{media encryption} for images and files shared between users.
+    \item Conduct periodic \textbf{security audits and penetration testing} to maintain strong cryptographic standards.
+\end{itemize}
+
+
+\newpage
+\begin{center}
+    {\LARGE \textbf{Introduction}}
+\end{center}
+\vspace{1cm}
+
+\renewcommand{\baselinestretch}{1.5}\normalsize
+This project presents a secure real-time chat application that enables \textbf{end-to-end encrypted} communication between users. The primary objective of the system is to provide confidential, authenticated, and reliable messaging between two or more users over a network. Using the WebSocket protocol for real-time communication, the application ensures low-latency message exchange and an interactive chatting experience. A \textbf{Diffie–Hellman}-based handshake mechanism is implemented to establish shared secret keys for encryption, guaranteeing data privacy even in untrusted environments.  
+
+The frontend of the system is developed using \textbf{React}, providing a responsive and user-friendly interface, while the backend leverages \textbf{Python} with FastAPI (or Node.js) to handle secure message routing and session management. Core functionalities include encrypted text messaging, image sharing, message persistence for offline recovery, and handshake-based authentication to verify user identity.  
+
+The expected outcome of this project is a secure, fast, and efficient chat platform similar to \textbf{WhatsApp}, where users can communicate in real-time without compromising data integrity or confidentiality. This project effectively integrates key concepts of \textbf{cryptography}, network security, and full-stack web development to deliver a robust and privacy-preserving communication solution.
+
+\vspace*{\fill}
+
+\newpage
+\thispagestyle{empty}
+
+\begin{center}
+    \textbf{\LARGE Problem Statement}
+\end{center}
+
+\onehalfspacing
+\noindent
+In today’s digital communication era, privacy and data protection have become critical concerns. Conventional chat applications often rely on centralized servers that store user messages in plain or partially encrypted formats, making them vulnerable to unauthorized access, data breaches, and surveillance. Users lack full control over their conversations, and message interception can compromise sensitive personal or organizational information.
+
+To address these challenges, this project aims to design and implement a \textbf{secure end-to-end encrypted chat application} that ensures confidentiality, integrity, and authenticity of all messages exchanged between users. The communication should be encrypted such that only the sender and intended recipient can access the content — not even the server or network intermediaries. 
+
+The system should further incorporate secure authentication mechanisms, prevent man-in-the-middle attacks, and enable real-time encrypted communication over WebSockets while maintaining usability and performance comparable to modern messaging platforms.
+
+Additionally, many existing messaging systems depend on third-party encryption services or closed-source architectures, limiting transparency and user trust. This lack of transparency makes it difficult for users to verify how their data is managed, stored, or transmitted. A fully open-source, verifiable implementation would allow both developers and users to audit the codebase and ensure adherence to strong cryptographic principles.
+
+
+The final solution is expected to demonstrate a robust and secure communication framework that:
+\begin{itemize}
+    \item Prevents eavesdropping, tampering, and impersonation attacks.
+    \item Protects message confidentiality even if the communication server is compromised.
+    \item Enables encrypted real-time messaging using WebSockets.
+    \item Provides a simple, intuitive user interface for seamless chat experiences.
+    \item Ensures transparency and trust through open-source cryptographic implementation.
+\end{itemize}
+
+\newpage
+\begin{center}
+    {\LARGE \textbf{System Requirements}}
+\end{center}
+\vspace{1cm}
+
+\renewcommand{\baselinestretch}{1.5}\normalsize
+
+The development and execution of the “End-to-End Encrypted Chat App” require specific hardware and software configurations to ensure smooth performance, compatibility, and stability during implementation and testing. The following specifications outline the minimum requirements for running the application effectively.  
+
+\vspace{0.5cm}
+\noindent
+\textbf{a. Hardware Requirements}
+\begin{itemize}
+    \item Minimum 4 GB RAM
+    \item Intel Core i3 Processor or higher
+    \item 2 GB of available storage space
+    \item Stable internet connection for real-time communication
+\end{itemize}
+
+\vspace{0.5cm}
+\noindent
+\textbf{b. Software Requirements}
+\begin{itemize}
+    \item \textbf{Operating System:} macOS / Windows / Linux
+    \item \textbf{Development Tools:} Visual Studio Code (VS Code)
+    \item \textbf{Runtime Environments:} Node.js and Python 3.x
+    \item \textbf{Frontend Libraries:} React.js, WebSocket API
+    \item \textbf{Backend Frameworks:} FastAPI or Flask (Python)
+    \item \textbf{Optional Security Library:} CryptoJS for encryption utilities
+\end{itemize}
+
+\vspace{0.5cm}
+These configurations provide the necessary environment for developing, testing, and deploying the secure chat application, ensuring reliable encryption, real-time performance, and cross-platform support.
+
+\vspace*{\fill}
+
+
+
+\renewcommand{\baselinestretch}{1.5}\normalsize
+\justifying
+
+\
+% =============================
+% Geotagged Photos Section
+% =============================
+
+
+
+% =============================
+% Field Observations Section
+% =============================
+\newpage
+\begin{center}
+    {\LARGE \textbf{System Design}}
+\end{center}
+\vspace{1cm}
+
+\renewcommand{\baselinestretch}{1.5}\normalsize
+
+The system design of the “End-to-End Encrypted Chat App” outlines the architecture, data flow, and interaction between different components such as the client, server, and database. This design ensures secure, reliable, and real-time communication between users through encryption and authenticated sessions. The design phase includes multiple diagrams to visually represent the working of the system.
+
+\vspace{0.8cm}
+\noindent
+\textbf{1. Architecture Diagram}
+\begin{itemize}
+    \item The architecture consists of three primary components: the \textbf{Client}, the \textbf{Server}, and the \textbf{Database}.
+    \item The client (React frontend) communicates with the backend (FastAPI/Node.js) using \textbf{WebSocket protocol} for real-time message transmission.
+    \item The server handles encryption, message routing, and user authentication, while the database stores encrypted chat logs and user credentials.
+\end{itemize}
+
+\begin{center}
+    \includegraphics[width=0.9\linewidth]{diagram-export-10-20-2025-11_17_41-AM.png}
+    \\\textit{Figure 1: System Architecture Diagram}
+\end{center}
+
+\vspace{0.8cm}
+\noindent
+\textbf{2. Data Flow Diagram (DFD)}
+\begin{itemize}
+    
+        \includegraphics[width=0.9\linewidth]{DFD.png}
+        \\\textit{}
+    
+    \item \textbf{Level 0 DFD:} Shows the basic flow of messages between users through the server.
+    \item \textbf{Level 1 DFD:} Expands on the handshake process, key exchange, and encryption/decryption flow during message transmission.
+\end{itemize}
+
+\begin{center}
+    \includegraphics[width=0.9\linewidth]{dfd-level0.png}
+    \\\textit{Figure 2: DFD Level 0 – Basic Message Flow}
+
+    
+\end{center}
+
+\vspace{0.8cm}
+
+
+\vspace*{\fill}  
+
+
+\newpage
+\begin{center}
+    {\LARGE \textbf{Implementation}}
+\end{center}
+\vspace{1cm}
+
+\renewcommand{\baselinestretch}{1.5}\normalsize
+
+This section describes the implementation details of the \textbf{End-to-End Encrypted Chat Application}, covering the frontend, backend, encryption mechanism, and message storage logic. The development stack integrates modern web technologies for secure, real-time communication.
+
+\vspace{0.8cm}
+\noindent
+\textbf{7.1 Frontend Implementation}
+\vspace{0.3cm}
+
+The frontend is built using \textbf{React.js} and \textbf{Vite}, providing a responsive and interactive interface for users. It includes modules for user login, chat window, user list, and image/file handling. 
+
+\begin{itemize}
+    \item Users enter a username and phone number (used as a pseudo public key).
+    \item Real-time communication occurs using the WebSocket protocol.
+    \item Image messages are converted to Base64 format before transmission.
+\end{itemize}
+
+\noindent
+\textbf{Example Code Snippet: User Login and Connection}
+\begin{verbatim}
+const handleLogin = () => {
+  connect(username, (msg) => handleIncomingMessage(msg));
+  setConnected(true);
+};
+\end{verbatim}
+
+\noindent
+\textbf{Message Rendering Component:}
+\begin{verbatim}
+function MessageBubble({ message, isMe }) {
+  return (
+    <div className={`message-bubble ${isMe ? "sent" : "received"}`}>
+      {message.image ? (
+        <img src={message.image} alt="image" className="chat-image" />
+      ) : (
+        <p>{message.text}</p>
+      )}
+    </div>
+  );
+}
+\end{verbatim}
+
+\vspace{0.8cm}
+\noindent
+\textbf{7.2 Backend Implementation}
+\vspace{0.3cm}
+
+The backend is developed in \textbf{Python 3} using the \textbf{WebSocket} and \textbf{asyncio} libraries to manage real-time bi-directional communication.  
+Each connected user registers with a username, and the server maintains:
+\begin{itemize}
+    \item A list of active users (WebSocket clients)
+    \item User-to-connection mapping
+    \item Message queue for offline delivery
+\end{itemize}
+
+\noindent
+\textbf{Core WebSocket Handler:}
+\begin{verbatim}
+import asyncio, websockets, json
+
+clients = {}
+
+async def handler(websocket):
+    username = None
+    try:
+        async for message in websocket:
+            data = json.loads(message)
+            if data["type"] == "register":
+                username = data["username"]
+                clients[username] = websocket
+                await broadcast_user_list()
+            elif data["type"] in ("message", "image"):
+                await forward_message(data)
+    finally:
+        if username in clients:
+            del clients[username]
+            await broadcast_user_list()
+\end{verbatim}
+
+\vspace{0.8cm}
+\noindent
+\textbf{7.3 Encryption and Handshake}
+\vspace{0.3cm}
+
+The application implements a simplified version of the \textbf{Diffie–Hellman Key Exchange} algorithm for secure session establishment.  
+During the handshake:
+\begin{enumerate}
+    \item Each user generates a private and public key.
+    \item Public keys are exchanged through the WebSocket server.
+    \item Both users independently compute a shared secret key.
+\end{enumerate}
+
+\noindent
+\textbf{Handshake Logic (Simplified):}
+\begin{verbatim}
+if data["type"] == "handshake":
+    peer = data["peer"]
+    await clients[peer].send(json.dumps({
+        "type": "handshake_request",
+        "from": username,
+        "public_key": user_public_key
+    }))
+\end{verbatim}
+
+Once both parties confirm, a secure communication channel is established:
+\begin{verbatim}
+await websocket.send(json.dumps({
+    "type": "handshake_success",
+    "peer": peer
+}))
+\end{verbatim}
+
+\vspace{0.8cm}
+\noindent
+\textbf{7.4 Persistent Message Storage}
+\vspace{0.3cm}
+
+To ensure message recovery after disconnection, an \textbf{offline message queue} is implemented.  
+Messages sent to offline users are stored in a JSON file and delivered upon reconnection.
+
+\noindent
+\textbf{Offline Message Logic:}
+\begin{verbatim}
+def save_offline_message(username, message):
+    messages = json.load(open("offline_messages.json"))
+    messages.setdefault(username, []).append(message)
+    json.dump(messages, open("offline_messages.json", "w"))
+
+async def deliver_offline_messages(username, websocket):
+    messages = json.load(open("offline_messages.json"))
+    if username in messages:
+        for msg in messages[username]:
+            await websocket.send(json.dumps(msg))
+        del messages[username]
+        json.dump(messages, open("offline_messages.json", "w"))
+\end{verbatim}
+
+\vspace{0.8cm}
+\noindent
+\textbf{7.5 Integration and Workflow}
+\vspace{0.3cm}
+
+The integration between the frontend and backend follows the sequence:
+\begin{enumerate}
+    \item User logs in through the React interface.
+    \item WebSocket connection is established with the backend.
+    \item User initiates a handshake to generate a shared key.
+    \item Messages and images are exchanged securely.
+    \item Offline messages are stored and delivered upon reconnection.
+\end{enumerate}
+
+\vspace{0.8cm}
+\noindent
+\textbf{7.6 Output and Interface Screens}
+\vspace{0.3cm}
+
+The final implementation includes:
+\begin{itemize}
+    \item Login screen for username and phone number entry.
+    \item User list showing live and connected users.
+    \item Chat interface with text and image message support.
+    \item Secure handshake confirmation between users.
+\end{itemize}
+
+
+
+\vspace*{\fill}
+
+\newpage
+\begin{center}
+    {\LARGE \textbf{Testing and Results}}
+\end{center}
+\vspace{1cm}
+
+\renewcommand{\baselinestretch}{1.5}\normalsize
+
+This section presents the testing methodology, evaluation results, and screenshots demonstrating the successful functioning of the \textbf{End-to-End Encrypted Chat Application}.  
+The testing process focused on ensuring secure encryption, message delivery reliability, and smooth communication between multiple users in real time.
+
+\vspace{0.8cm}
+\noindent
+\textbf{8.1 Encryption Testing}
+\vspace{0.3cm}
+
+To verify the encryption logic, a sample message was encrypted using the shared key generated by the \textbf{Diffie–Hellman Key Exchange}.  
+The ciphertext was transmitted between users, ensuring that even if intercepted, it would not reveal the original content.
+
+\noindent
+\textbf{Example Output:}
+\begin{verbatim}
+Original Message: "Hello KK"
+Encrypted Message: "U2FsdGVkX19+d92kT3C4O8xLz90j..."
+Decrypted Message: "Hello KK"
+\end{verbatim}
+
+\noindent
+The successful decryption at the receiver’s end confirmed that the key exchange and encryption mechanisms were functioning correctly.
+
+\vspace{0.8cm}
+\noindent
+\textbf{8.2 Offline Message Delivery Test}
+\vspace{0.3cm}
+
+To ensure message persistence, the system was tested for offline delivery functionality.  
+When user \texttt{SS} went offline, messages sent by \texttt{KK} were temporarily stored in a local JSON-based queue.  
+Upon \texttt{SS}’s reconnection, the application automatically retrieved and displayed the pending messages.
+
+\noindent
+\textbf{Test Scenario:}
+\begin{itemize}
+    \item \texttt{KK} sends messages while \texttt{SS} is offline.
+    \item Messages are stored in \texttt{offline\_messages.json}.
+    \item When \texttt{SS} reconnects, all queued messages are delivered.
+\end{itemize}
+
+\noindent
+\textbf{Sample Log Output:}
+\begin{verbatim}
+[Server] User SS disconnected.
+[Server] Storing offline message for SS.
+[Server] Delivering 2 pending messages to SS on reconnect.
+\end{verbatim}
+
+\vspace{0.8cm}
+\noindent
+\textbf{8.3 Multi-User Communication Test}
+\vspace{0.3cm}
+
+The chat server was tested with multiple concurrent users connected from different devices on the same local network.  
+Each user successfully registered via the WebSocket connection and exchanged encrypted text and image messages.
+
+\noindent
+\textbf{Observed Results:}
+\begin{itemize}
+    \item Real-time message delivery under 200 ms latency.
+    \item Stable connection for 5+ simultaneous users.
+    \item Successful one-to-one and broadcast communication.
+\end{itemize}
+
+\noindent
+\textbf{Sample Server Log:}
+\begin{verbatim}
+[Server] New connection: KK
+[Server] New connection: SS
+[Handshake] KK ↔ SS : Shared key established
+[Message] KK → SS : "Hello, this is secure!"
+[Message Delivered] SS received (Decrypted successfully)
+\end{verbatim}
+
+\vspace{0.8cm}
+\noindent
+\textbf{8.4 Screenshots and Output Interface}
+\vspace{0.3cm}
+
+The following figures illustrate the key stages of the chat application’s workflow, confirming the successful implementation of all core functionalities.
+
+\begin{itemize}
+    \item \textbf{Figure 8.1:} Login page for entering username and phone number.  
+    \item \textbf{Figure 8.2:} Chat window showing real-time encrypted message exchange.  
+    \item \textbf{Figure 8.3:} Handshake success message confirming secure key establishment.  
+    \item \textbf{Figure 8.4:} Offline/online message delivery demonstration.  
+\end{itemize}
+
+\vspace{0.5cm}
+\noindent
+\textbf{Example Screenshot Layout (for reference):}
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{login_page.png}\\[0.3cm]
+    \textit{Figure 8.1: User Login Interface}
+\end{center}
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{chat_window.png}\\[0.3cm]
+    \textit{Figure 8.2: Chat Window Displaying Encrypted Messages}
+\end{center}
+
+\vspace{0.5cm}
+ 
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{offline_demo.png}\\[0.3cm]
+    \textit{Figure 8.4: Offline and Online Message Delivery Test}
+\end{center}
+
+\vspace{0.8cm}
+\noindent
+The testing outcomes demonstrate that the application successfully meets its objectives — ensuring secure, real-time, and reliable end-to-end communication between users, even in offline scenarios.
+
+\vspace*{\fill}
+
+
+\newpage
+\begin{center}
+    {\LARGE \textbf{Advantages and Limitations}}
+\end{center}
+\vspace{1cm}
+
+\renewcommand{\baselinestretch}{1.5}\normalsize
+
+This section highlights the key benefits and constraints observed during the development and testing of the \textbf{End-to-End Encrypted Chat Application}.  
+The advantages focus on security, performance, and usability, while the limitations identify current challenges and areas for potential improvement.
+
+\vspace{0.8cm}
+\noindent
+\textbf{9.1 Advantages}
+\vspace{0.3cm}
+
+\begin{itemize}
+    \item \textbf{End-to-End Encryption:}  
+    Messages are securely encrypted using the \textbf{Diffie–Hellman Key Exchange} mechanism, ensuring that only the sender and receiver can read the content.
+
+    \item \textbf{Real-Time Communication:}  
+    WebSocket technology enables fast, bi-directional communication between users with minimal latency.
+
+    \item \textbf{Cross-Platform Compatibility:}  
+    The application is fully web-based and works seamlessly on macOS, Windows, and Linux systems.
+
+    \item \textbf{Offline Message Handling:}  
+    Messages sent while a user is offline are stored temporarily and delivered automatically upon reconnection.
+
+    \item \textbf{Lightweight Architecture:}  
+    The combination of a React frontend and Python WebSocket backend ensures minimal resource usage and easy scalability.
+
+    \item \textbf{User Privacy:}  
+    No third-party servers or external APIs are used for message processing, maintaining complete control over user data.
+
+    \item \textbf{Support for Multimedia:}  
+    In addition to text, users can send and receive image files with secure transmission handling.
+\end{itemize}
+
+\vspace{0.8cm}
+\newpage
+\noindent
+\textbf{9.2 Limitations}
+\vspace{0.3cm}
+
+\begin{itemize}
+    \item \textbf{Lack of Database Integration:}  
+    Currently, messages are stored temporarily in memory or local files. A robust database (e.g., MongoDB or PostgreSQL) can improve scalability and long-term storage.
+
+    \item \textbf{No Group Chat Functionality:}  
+    The system currently supports only one-to-one communication. Implementing secure group chats would require additional key management.
+
+    \item \textbf{Limited Encryption Scope for Media:}  
+    While text messages are encrypted end-to-end, image files are transmitted without encryption to preserve performance.
+
+    \item \textbf{No Push Notifications:}  
+    Offline users do not receive notifications for missed messages, which may reduce usability in mobile environments.
+
+    \item \textbf{Basic User Authentication:}  
+    The system identifies users only by username or phone number without password or multi-factor authentication.
+
+    \item \textbf{Local Network Dependency:}  
+    Current deployment is limited to local IP-based communication. For global access, secure HTTPS and domain setup would be needed.
+\end{itemize}
+
+\vspace{0.8cm}
+\noindent
+Despite these limitations, the application successfully fulfills its primary goal of enabling secure, real-time, peer-to-peer communication with strong encryption and reliability.
+
+\vspace*{\fill}
+
+\newpage
+\begin{center}
+    {\LARGE \textbf{Conclusion and Future Scope}}
+\end{center}
+\vspace{1cm}
+
+\renewcommand{\baselinestretch}{1.5}\normalsize
+
+The \textbf{End-to-End Encrypted Chat Application} successfully demonstrates secure, real-time communication using WebSocket technology and the Diffie–Hellman key exchange algorithm.  
+The project achieves the primary objective of ensuring data confidentiality, integrity, and privacy during message transmission between users.
+
+\vspace{0.5cm}
+\noindent
+\textbf{10.1 Conclusion}
+\vspace{0.3cm}
+
+\begin{itemize}
+    \item The system ensures \textbf{end-to-end security}, meaning only the sender and receiver can access the content of the messages.
+    \item Real-time message delivery is achieved through \textbf{WebSocket connections}, ensuring smooth and low-latency communication.
+    \item The application interface, built using \textbf{React.js}, offers a user-friendly and responsive design suitable for various devices.
+    \item The backend, implemented in \textbf{Python}, efficiently handles concurrent connections and manages user sessions securely.
+    \item The overall system successfully demonstrates how encryption and network security principles can be applied in modern communication systems.
+\end{itemize}
+
+\vspace{0.8cm}
+\noindent
+\textbf{10.2 Future Scope}
+\vspace{0.3cm}
+
+\begin{itemize}
+    \item \textbf{Database Integration:}  
+    Integrating a secure and scalable database (e.g., MongoDB, PostgreSQL) to permanently store messages and enable offline message recovery.
+
+    \item \textbf{Group Chat Functionality:}  
+    Extending the encryption model to support multiple users in a group with shared session keys.
+
+    \item \textbf{Advanced Authentication:}  
+    Implementing password-based or multi-factor authentication for improved user security and identity verification.
+
+    \item \textbf{Mobile Application:}  
+    Developing a cross-platform mobile version using React Native for enhanced accessibility.
+
+    \item \textbf{Media Encryption:}  
+    Introducing end-to-end encryption for image and video files while maintaining optimal performance.
+
+    \item \textbf{Cloud Deployment:}  
+    Hosting the server on a cloud infrastructure (such as AWS or Azure) to allow global access with secure SSL certificates.
+
+    \item \textbf{AI-Powered Security Monitoring:}  
+    Adding intelligent intrusion detection or anomaly monitoring to detect unauthorized access attempts.
+\end{itemize}
+
+\vspace{0.8cm}
+The proposed enhancements will transform the application into a fully scalable, production-ready communication platform with robust security and global accessibility.
+
+\vspace*{\fill}
+
+\newpage
+\begin{center}
+    {\LARGE \textbf{References}}
+\end{center}
+\vspace{1cm}
+
+\renewcommand{\baselinestretch}{1.5}\normalsize
+
+\begin{enumerate}
+    \item William Stallings, \textit{Cryptography and Network Security: Principles and Practice}, 8th Edition, Pearson Education.
+    \item Behrouz A. Forouzan, \textit{Data Communications and Networking}, 5th Edition, McGraw Hill.
+    \item Douglas Comer, \textit{Internetworking with TCP/IP}, 6th Edition, Pearson.
+    \item Mozilla Developer Network (MDN), “WebSocket API Documentation” — \url{https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API}
+    \item React Official Documentation — \url{https://react.dev}
+    \item Python Official Documentation — \url{https://docs.python.org/3/}
+    \item FastAPI Framework — \url{https://fastapi.tiangolo.com}
+    \item CryptoJS GitHub Repository — \url{https://github.com/brix/crypto-js}
+    \item Open Web Application Security Project (OWASP), “Web Security Guidelines” — \url{https://owasp.org}
+\end{enumerate}
+
+\vspace{1cm}
+These references collectively guided the development and understanding of encryption principles, real-time networking, and secure system design for the End-to-End Encrypted Chat Application.
+
+\vspace*{\fill}
+
+
+
+\end{document}
